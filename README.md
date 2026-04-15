@@ -11,8 +11,9 @@ All credit for the original color schemes goes to [U.S. Graphics Company](https:
 ## Installation
 
 ```lua
-vim.pack.add({ 'https://github.com/yourusername/usgc-nvim' })
-vim.cmd.colorscheme('usgc-reticle')
+vim.pack.add({ 'https://github.com/stefanvanburen/usgc-nvim' })
+-- e.g.
+vim.cmd.colorscheme('usgc-highk')
 ```
 
 ## Themes
