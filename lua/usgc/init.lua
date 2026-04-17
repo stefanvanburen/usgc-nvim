@@ -313,6 +313,83 @@ function M.make_groups(opts)
     MiniFilesTitle = { link = 'FloatTitle' },
     MiniFilesTitleFocused = { link = 'FloatTitle' },
     MiniTrailspace = { bg = p.fl_red },
+
+    -- mini.pick
+    MiniPickBorder = { link = 'FloatBorder' },
+    MiniPickBorderBusy = { link = 'DiagnosticWarn' },
+    MiniPickBorderText = { link = 'FloatTitle' },
+    MiniPickHeader = { link = 'Comment' },
+    MiniPickIconDirectory = { link = 'Directory' },
+    MiniPickIconFile = { link = 'Normal' },
+    MiniPickMatchCurrent = { link = 'PmenuSel' },
+    MiniPickMatchMarked = { link = 'Visual' },
+    MiniPickMatchRanges = { fg = opts.accent, bold = true },
+    MiniPickNormal = { link = 'NormalFloat' },
+    MiniPickPreviewLine = { link = 'CursorLine' },
+    MiniPickPreviewRegion = { link = 'Visual' },
+    MiniPickPrompt = { link = 'Special' },
+
+    -- mini.notify
+    MiniNotifyBorder = { link = 'FloatBorder' },
+    MiniNotifyNormal = { link = 'NormalFloat' },
+    MiniNotifyTitle = { link = 'FloatTitle' },
+
+    -- mini.statusline
+    MiniStatuslineDevinfo = { fg = opts.fg, bg = opts.cursorline_bg },
+    MiniStatuslineFileinfo = { link = 'MiniStatuslineDevinfo' },
+    MiniStatuslineFilename = { link = 'StatusLineNC' },
+    MiniStatuslineInactive = { link = 'StatusLineNC' },
+    MiniStatuslineModeCommand = { fg = p.black, bg = p.yellow, bold = true },
+    MiniStatuslineModeInsert = { fg = p.black, bg = p.green, bold = true },
+    MiniStatuslineModeNormal = { fg = opts.bg, bg = opts.fg, bold = true },
+    MiniStatuslineModeOther = { fg = p.black, bg = p.gray, bold = true },
+    MiniStatuslineModeReplace = { fg = p.white, bg = p.fl_red, bold = true },
+    MiniStatuslineModeVisual = { fg = p.black, bg = p.fl_cyan, bold = true },
+
+    -- mini.starter
+    MiniStarterCurrent = { link = 'PmenuSel' },
+    MiniStarterFooter = { link = 'Comment' },
+    MiniStarterHeader = { link = 'Title' },
+    MiniStarterInactive = { link = 'Comment' },
+    MiniStarterItem = { link = 'Normal' },
+    MiniStarterItemBullet = { link = 'Special' },
+    MiniStarterItemPrefix = { link = 'Special' },
+    MiniStarterSection = { link = 'Title' },
+    MiniStarterQuery = { fg = opts.accent, bold = true },
+
+    -- mini.jump / mini.jump2d
+    MiniJump = { fg = opts.bg, bg = opts.accent, bold = true },
+    MiniJump2dDim = { link = 'Comment' },
+    MiniJump2dSpot = { fg = opts.bg, bg = opts.accent, bold = true },
+    MiniJump2dSpotAhead = { fg = opts.bg, bg = opts.fg },
+    MiniJump2dSpotUnique = { link = 'MiniJump2dSpot' },
+
+    -- mini.hipatterns
+    MiniHipatternsFixme = { fg = opts.bg, bg = p.fl_red, bold = true },
+    MiniHipatternsHack = { fg = p.black, bg = p.fl_orange, bold = true },
+    MiniHipatternsTodo = { fg = p.black, bg = p.fl_cyan, bold = true },
+    MiniHipatternsNote = { fg = p.black, bg = p.green, bold = true },
+
+    -- mini.icons
+    MiniIconsAzure = { fg = p.fl_cyan },
+    MiniIconsBlue = { fg = p.fl_blue },
+    MiniIconsCyan = { fg = p.cyan },
+    MiniIconsGreen = { fg = p.green },
+    MiniIconsGrey = { fg = p.gray },
+    MiniIconsOrange = { fg = p.fl_orange },
+    MiniIconsPurple = { fg = p.fl_magenta },
+    MiniIconsRed = { fg = p.fl_red },
+    MiniIconsYellow = { fg = p.yellow },
+
+    -- mini.git
+    MiniGitSignAdd = { link = 'MiniDiffSignAdd' },
+    MiniGitSignChange = { link = 'MiniDiffSignChange' },
+    MiniGitSignDelete = { link = 'MiniDiffSignDelete' },
+
+    -- treesitter-context
+    TreesitterContext = { bg = opts.cursorline_bg },
+    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = opts.cursorline_bg },
+    TreesitterContextSeparator = { fg = p.gray },
   }
 end
 
