@@ -8,9 +8,16 @@ local opts = {
   fg = p.fl_cyan,
   caret = p.fl_blue,
   accent = p.fl_yellow,
-  selection_bg = p.olive,
-  selection_fg = p.fl_yellow,
-  line_highlight = p.fl_blue,
+  -- Visual selection and search
+  selection_bg = p.cyan,
+  selection_fg = p.fl_cyan,
+  -- Cursor line (subtle)
+  cursorline_bg = p.blue,
+  -- Popup menu (distinct from cursorline)
+  popup_bg = p.cyan,
+  popup_sel_bg = p.fl_yellow,
+  popup_sel_fg = p.black,
+  -- Gutter
   gutter_fg = p.fl_yellow,
   gutter_highlight = p.fl_cyan,
 }
