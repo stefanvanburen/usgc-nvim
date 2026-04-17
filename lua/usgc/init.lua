@@ -390,6 +390,23 @@ function M.make_groups(opts)
     TreesitterContext = { bg = opts.cursorline_bg },
     TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = opts.cursorline_bg },
     TreesitterContextSeparator = { fg = p.gray },
+
+    -- mason.nvim
+    MasonNormal = { link = 'NormalFloat' },
+    MasonHeader = { fg = p.black, bg = opts.accent, bold = true },
+    MasonHeaderSecondary = { fg = p.black, bg = opts.fg, bold = true },
+    MasonHighlight = { fg = opts.accent },
+    MasonHighlightBlock = { fg = p.black, bg = opts.accent },
+    MasonHighlightBlockBold = { fg = p.black, bg = opts.accent, bold = true },
+    MasonHighlightSecondary = { fg = opts.fg },
+    MasonHighlightBlockSecondary = { fg = p.black, bg = opts.fg },
+    MasonHighlightBlockBoldSecondary = { fg = p.black, bg = opts.fg, bold = true },
+    MasonMuted = { fg = p.gray },
+    MasonMutedBlock = { fg = p.black, bg = p.gray },
+    MasonMutedBlockBold = { fg = p.black, bg = p.gray, bold = true },
+    MasonError = { link = 'ErrorMsg' },
+    MasonWarning = { link = 'WarningMsg' },
+    MasonHeading = { bold = true },
   }
 end
 
