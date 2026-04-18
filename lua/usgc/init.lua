@@ -161,7 +161,7 @@ function M.make_groups(opts)
     DiagnosticFloatingOk = { link = 'DiagnosticOk' },
     DiagnosticFloatingWarn = { link = 'DiagnosticWarn' },
     DiagnosticHint = { fg = p.gray },
-    DiagnosticInfo = { fg = p.fl_cyan },
+    DiagnosticInfo = { fg = p.fl_blue },
     DiagnosticOk = { fg = p.green },
     DiagnosticSignError = { link = 'DiagnosticError' },
     DiagnosticSignHint = { link = 'DiagnosticHint' },
@@ -181,7 +181,7 @@ function M.make_groups(opts)
     DiagnosticVirtualTextWarn = { link = 'DiagnosticWarn' },
     DiagnosticWarn = { fg = p.fl_orange },
     Added = { fg = p.green },
-    Changed = { fg = p.fl_cyan },
+    Changed = { fg = p.fl_blue },
     Removed = { fg = p.fl_red },
     DiffAdd = { fg = p.black, bg = p.green },
     DiffChange = { fg = opts.fg, bg = opts.cursorline_bg },
@@ -252,7 +252,7 @@ function M.make_groups(opts)
     SpecialComment = { link = 'Special' },
     SpecialKey = { fg = p.gray },
     SpellBad = { sp = p.fl_red, undercurl = true },
-    SpellCap = { sp = p.fl_cyan, undercurl = true },
+    SpellCap = { sp = p.fl_blue, undercurl = true },
     SpellLocal = { sp = p.green, undercurl = true },
     SpellRare = { sp = p.fl_magenta, undercurl = true },
     Statement = { fg = opts.fg, bold = true },
@@ -302,7 +302,7 @@ function M.make_groups(opts)
     MiniDiffOverContext = { link = 'DiffChange' },
     MiniDiffOverDelete = { link = 'DiffDelete' },
     MiniDiffSignAdd = { fg = p.fl_green },
-    MiniDiffSignChange = { fg = p.fl_cyan },
+    MiniDiffSignChange = { fg = p.fl_blue },
     MiniDiffSignDelete = { fg = p.fl_red },
     MiniFilesBorder = { link = 'FloatBorder' },
     MiniFilesBorderModified = { link = 'DiagnosticFloatingWarn' },
@@ -344,7 +344,7 @@ function M.make_groups(opts)
     MiniStatuslineModeNormal = { fg = opts.bg, bg = opts.fg, bold = true },
     MiniStatuslineModeOther = { fg = p.black, bg = p.gray, bold = true },
     MiniStatuslineModeReplace = { fg = p.white, bg = p.fl_red, bold = true },
-    MiniStatuslineModeVisual = { fg = p.black, bg = p.fl_cyan, bold = true },
+    MiniStatuslineModeVisual = { fg = p.black, bg = p.fl_green, bold = true },
 
     -- mini.starter
     MiniStarterCurrent = { link = 'PmenuSel' },
@@ -367,7 +367,7 @@ function M.make_groups(opts)
     -- mini.hipatterns
     MiniHipatternsFixme = { fg = opts.bg, bg = p.fl_red, bold = true },
     MiniHipatternsHack = { fg = p.black, bg = p.fl_orange, bold = true },
-    MiniHipatternsTodo = { fg = p.black, bg = p.fl_cyan, bold = true },
+    MiniHipatternsTodo = { fg = p.black, bg = p.fl_blue, bold = true },
     MiniHipatternsNote = { fg = p.black, bg = p.green, bold = true },
 
     -- mini.icons
