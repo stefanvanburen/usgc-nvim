@@ -197,7 +197,7 @@ function M.make_groups(opts)
     FloatFooter = { link = 'FloatTitle' },
     FloatTitle = { link = 'Title' },
     FoldColumn = { fg = p.gray },
-    Folded = { fg = p.gray, bg = opts.cursorline_bg },
+    Folded = { fg = p.gray, bg = opts.fold_bg or opts.cursorline_bg },
     Function = { fg = opts.fg },
     Identifier = { fg = opts.fg },
     Ignore = { link = 'Normal' },
@@ -214,7 +214,7 @@ function M.make_groups(opts)
     LspInlayHint = { link = 'NonText' },
     LspReferenceRead = { link = 'LspReferenceText' },
     LspReferenceTarget = { link = 'LspReferenceText' },
-    LspReferenceText = { bg = opts.cursorline_bg },
+    LspReferenceText = { bg = opts.reference_bg or opts.cursorline_bg },
     LspReferenceWrite = { link = 'LspReferenceText' },
     LspSignatureActiveParameter = { link = 'Visual' },
     Macro = { link = 'PreProc' },
@@ -387,8 +387,8 @@ function M.make_groups(opts)
     MiniGitSignDelete = { link = 'MiniDiffSignDelete' },
 
     -- treesitter-context
-    TreesitterContext = { bg = opts.cursorline_bg },
-    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = opts.cursorline_bg },
+    TreesitterContext = { bg = opts.context_bg or opts.cursorline_bg },
+    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = opts.context_bg or opts.cursorline_bg },
     TreesitterContextSeparator = { fg = p.gray },
 
     -- mason.nvim

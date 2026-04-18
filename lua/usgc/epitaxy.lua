@@ -8,18 +8,22 @@ local opts = {
   fg = p.fl_magenta,
   caret = p.white,
   accent = p.fl_blue,
-  -- Visual selection and search
-  selection_bg = p.magenta,
-  selection_fg = p.fl_magenta,
-  -- Cursor line (subtle)
-  cursorline_bg = p.blue,
+  -- Visual selection and search (original uses blue)
+  selection_bg = p.blue,
+  selection_fg = p.fl_yellow,
+  -- Cursor line (original uses fl_yellow)
+  cursorline_bg = p.fl_yellow,
   -- Popup menu (distinct from cursorline)
   popup_bg = p.magenta,
   popup_sel_bg = p.fl_blue,
   popup_sel_fg = p.white,
+  -- LSP references / folds / context
+  reference_bg = p.fl_yellow,
+  fold_bg = p.fl_yellow,
+  context_bg = p.fl_yellow,
   -- Gutter
   gutter_fg = p.fl_blue,
-  gutter_highlight = p.fl_magenta,
+  gutter_highlight = p.black,
 }
 
 local M = {}
