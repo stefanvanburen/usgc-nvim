@@ -2,7 +2,7 @@
 
 Neovim port of the [U.S. Graphics Company color schemes](https://github.com/usgraphics/usgc-themes).
 
-All credit for the original color schemes goes to [U.S. Graphics Company](https://usgraphics.company/).
+All credit for the original color schemes goes to [U.S. Graphics Company](https://usgraphics.com/).
 
 ## Requirements
 
