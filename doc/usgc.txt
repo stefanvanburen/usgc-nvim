@@ -1,0 +1,87 @@
+*usgc.txt*    USGC color schemes for Neovim
+
+==============================================================================
+CONTENTS                                                       *usgc-contents*
+
+    1. Introduction ................. |usgc-introduction|
+    2. Requirements .................. |usgc-requirements|
+    3. Installation .................. |usgc-installation|
+    4. Themes ......................... |usgc-themes|
+    5. Standard colors ................ |usgc-colors|
+
+==============================================================================
+1. Introduction                                            *usgc-introduction*
+
+Neovim port of the U.S. Graphics Company color schemes:
+https://github.com/usgraphics/usgc-themes
+
+All credit for the original color schemes goes to U.S. Graphics Company:
+https://usgraphics.company/
+
+==============================================================================
+2. Requirements                                            *usgc-requirements*
+
+- Neovim 0.8+
+- 'termguicolors' enabled (these themes use true color only, no cterm
+  fallback)
+
+==============================================================================
+3. Installation                                            *usgc-installation*
+>lua
+    vim.opt.termguicolors = true
+    vim.pack.add({ 'https://github.com/stefanvanburen/usgc-nvim' })
+    -- e.g.
+    vim.cmd.colorscheme('usgc-highk')
+<
+
+==============================================================================
+4. Themes                                                        *usgc-themes*
+
+    PART NUMBER  THEME NAME        DESCRIPTION
+    5200-010     usgc-highk        White scheme
+    5200-020     usgc-reticle      Dark scheme
+    5200-030     usgc-polyimide    Amber scheme
+    5200-040     usgc-epitaxy      Magenta scheme
+    5200-050     usgc-metalgate    Cyan scheme
+
+                                                                  *usgc-highk*
+`usgc-highk` (5200-010)      White scheme. High dielectric constant.
+
+                                                                *usgc-reticle*
+`usgc-reticle` (5200-020)    Dark scheme. Photomask for lithography.
+
+                                                              *usgc-polyimide*
+`usgc-polyimide` (5200-030)  Amber scheme. Heat-resistant polymer.
+
+                                                                *usgc-epitaxy*
+`usgc-epitaxy` (5200-040)    Magenta scheme. Crystal layer growth.
+
+                                                              *usgc-metalgate*
+`usgc-metalgate` (5200-050)  Cyan scheme. Metal gate transistor.
+
+==============================================================================
+5. Standard colors                                               *usgc-colors*
+
+The themes use the USGC standard color palette:
+
+    HEX COLOR  NAME
+    #000000    BLACK
+    #FFFFFF    WHITE
+    #FF0000    FL RED
+    #00FF00    FL GREEN
+    #0000FF    FL BLUE
+    #00FFFF    FL CYAN
+    #FF00FF    FL MAGENTA
+    #FFFF00    FL YELLOW
+    #FF6600    FL ORANGE
+    #660000    MAROON
+    #00A645    GREEN
+    #000066    BLUE
+    #006666    CYAN
+    #660066    MAGENTA
+    #FFBF00    YELLOW
+    #666600    OLIVE
+    #999999    GRAY
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:

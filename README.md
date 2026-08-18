@@ -7,10 +7,12 @@ All credit for the original color schemes goes to [U.S. Graphics Company](https:
 ## Requirements
 
 - Neovim 0.8+
+- `'termguicolors'` enabled (these themes use true color only, no cterm fallback)
 
 ## Installation
 
 ```lua
+vim.opt.termguicolors = true
 vim.pack.add({ 'https://github.com/stefanvanburen/usgc-nvim' })
 -- e.g.
 vim.cmd.colorscheme('usgc-highk')
