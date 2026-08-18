@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  stylua:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          args: --check lua/
+
+  load-colorschemes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+      - name: Load each colorscheme in headless Neovim
+        run: |
+          set -e
+          for f in colors/*.vim; do
+            name=$(basename "$f" .vim)
+            echo "Loading $name"
+            nvim --headless -u NONE --cmd "set rtp+=." -c "colorscheme $name" -c "qa"
+          done
