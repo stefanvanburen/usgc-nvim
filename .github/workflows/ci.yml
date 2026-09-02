@@ -15,7 +15,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: latest
-          args: --check lua/ contrib/
+          args: --check lua/ contrib/ tests/
 
   load-colorschemes:
     runs-on: ubuntu-latest
@@ -33,6 +33,10 @@ jobs:
             echo "Loading $name"
             nvim --headless -u NONE --cmd "set rtp+=." -c "colorscheme $name" -c "qa"
           done
+
+      - name: Check the diff contrast
+        run: nvim -l tests/contrast.lua
+
       - name: Generate the terminal themes
         run: |
           set -e
