@@ -14,7 +14,10 @@ local opts = {
   -- Cursor line (original uses fl_blue)
   cursorline_bg = p.fl_blue,
   -- Popup menu (distinct from cursorline)
-  popup_bg = p.olive,
+  -- Not olive: at #666600 it is the brightest of the palette's dark tones, and
+  -- the fl_orange accent that draws every float's border reached only 2.06:1
+  -- on it. Maroon keeps the warm cast and takes that border to 4.57:1.
+  popup_bg = p.maroon,
   popup_sel_bg = p.yellow,
   popup_sel_fg = p.black,
   -- Gutter
