@@ -71,7 +71,7 @@ end
 -- @param opts table with:
 --   bg, fg, accent, caret
 --   selection_bg, selection_fg (for Visual, Search)
---   cursorline_bg (for CursorLine - subtle)
+--   cursorline_bg (for CursorLine, and mixed down for panels behind text)
 --   popup_bg, popup_sel_bg, popup_sel_fg (for Pmenu, floats)
 --   gutter_fg, gutter_highlight
 function M.make_groups(opts)
@@ -92,6 +92,15 @@ function M.make_groups(opts)
   local function tint(color, alpha)
     return mix(color, opts.bg, alpha)
   end
+
+  -- Backgrounds that sit behind text without marking the cursor: folds, the
+  -- inactive statusline and tabline, treesitter context, LSP references, the
+  -- current quickfix line. cursorline_bg is a fluorescent primary in every
+  -- variant, which reads as a marker the eye follows across one line but not
+  -- as a panel with text on it -- usgc-reticle's foreground came out at
+  -- 2.68:1 there, usgc-highk's folds at 2.08:1. A fifth of the way into the
+  -- background keeps each variant's color and clears 4.1:1 in all five.
+  local panel_bg = mix(opts.cursorline_bg, opts.bg, 0.2)
 
   -- Foregrounds run the other way. A palette color bright enough for a black
   -- background is often too pale for a white one -- #00FFFF reaches 1.25:1
@@ -250,7 +259,7 @@ function M.make_groups(opts)
     FloatFooter = { link = 'FloatTitle' },
     FloatTitle = { link = 'Title' },
     FoldColumn = { fg = p.gray },
-    Folded = { fg = p.gray, bg = opts.cursorline_bg },
+    Folded = { fg = opts.fg, bg = panel_bg },
     Function = { fg = opts.fg },
     Identifier = { fg = opts.fg },
     Ignore = { link = 'Normal' },
@@ -267,7 +276,7 @@ function M.make_groups(opts)
     LspInlayHint = { link = 'NonText' },
     LspReferenceRead = { link = 'LspReferenceText' },
     LspReferenceTarget = { link = 'LspReferenceText' },
-    LspReferenceText = { bg = opts.cursorline_bg },
+    LspReferenceText = { bg = panel_bg },
     LspReferenceWrite = { link = 'LspReferenceText' },
     LspSignatureActiveParameter = { link = 'Visual' },
     Macro = { link = 'PreProc' },
@@ -295,7 +304,7 @@ function M.make_groups(opts)
     PreCondit = { link = 'PreProc' },
     PreProc = { fg = opts.fg },
     Question = { fg = opts.fg },
-    QuickFixLine = { bg = opts.cursorline_bg },
+    QuickFixLine = { bg = panel_bg },
     Repeat = { link = 'Statement' },
     Search = { fg = opts.selection_fg, bg = opts.selection_bg, bold = true },
     SignColumn = { fg = opts.fg, bg = opts.bg },
@@ -310,14 +319,14 @@ function M.make_groups(opts)
     SpellRare = { sp = p.fl_magenta, undercurl = true },
     Statement = { fg = opts.fg, bold = true },
     StatusLine = { fg = opts.bg, bg = opts.fg },
-    StatusLineNC = { fg = opts.fg, bg = opts.cursorline_bg },
+    StatusLineNC = { fg = opts.fg, bg = panel_bg },
     StatusLineTerm = { link = 'StatusLine' },
     StatusLineTermNC = { link = 'StatusLineNC' },
     StorageClass = { link = 'Type' },
     String = { fg = opts.fg },
     Structure = { link = 'Type' },
     Substitute = { fg = opts.selection_fg, bg = opts.selection_bg },
-    TabLine = { fg = opts.fg, bg = opts.cursorline_bg },
+    TabLine = { fg = opts.fg, bg = panel_bg },
     TabLineFill = { bg = opts.bg },
     TabLineSel = { fg = opts.bg, bg = opts.fg },
     Tag = { link = 'Special' },
@@ -362,7 +371,7 @@ function M.make_groups(opts)
     MiniPickPrompt = { link = 'Special' },
 
     -- mini.statusline
-    MiniStatuslineDevinfo = { fg = opts.fg, bg = opts.cursorline_bg },
+    MiniStatuslineDevinfo = { fg = opts.fg, bg = panel_bg },
     MiniStatuslineFileinfo = { link = 'MiniStatuslineDevinfo' },
     MiniStatuslineFilename = { link = 'StatusLineNC' },
     MiniStatuslineInactive = { link = 'StatusLineNC' },
@@ -416,8 +425,8 @@ function M.make_groups(opts)
     MiniGitSignDelete = { link = 'Removed' },
 
     -- treesitter-context
-    TreesitterContext = { bg = opts.cursorline_bg },
-    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = opts.cursorline_bg },
+    TreesitterContext = { bg = panel_bg },
+    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = panel_bg },
     TreesitterContextSeparator = { fg = p.gray },
 
     -- mason.nvim

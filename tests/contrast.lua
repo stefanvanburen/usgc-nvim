@@ -36,6 +36,11 @@ local checks = {
 -- over an accent-colored row -- so each has to carry a background of its own.
 local layered = { 'MiniPickMatchRanges' }
 
+-- Backgrounds that carry text without marking the cursor. cursorline_bg is a
+-- fluorescent primary in every variant, so these mix it down until the theme's
+-- own foreground reads over them.
+local panels = { 'Folded', 'StatusLineNC', 'TabLine', 'QuickFixLine', 'TreesitterContext', 'LspReferenceText' }
+
 local function channel(color, shift)
   return math.floor(color / shift) % 0x100
 end
@@ -81,22 +86,25 @@ for _, path in ipairs(vim.fn.glob(root .. '/colors/usgc-*.vim', false, true)) do
   vim.cmd.colorscheme(scheme)
   local normal = hl('Normal')
 
-  for _, name in ipairs(layered) do
-    local spec = hl(name)
-    pairings = pairings + 1
-    if not spec.bg then
-      failures[#failures + 1] = string.format('%s: %s has no background of its own', scheme, name)
-    else
-      local ratio = contrast(spec.fg or normal.fg, spec.bg)
-      if ratio < 3 then
-        failures[#failures + 1] = string.format(
-          '%s: %s #%06X on its own #%06X is %.2f:1, below 3.0:1',
-          scheme,
-          name,
-          spec.fg or normal.fg,
-          spec.bg,
-          ratio
-        )
+  for _, group in ipairs({ { layered, 3 }, { panels, 4 } }) do
+    for _, name in ipairs(group[1]) do
+      local spec, min = hl(name), group[2]
+      pairings = pairings + 1
+      if not spec.bg then
+        failures[#failures + 1] = string.format('%s: %s has no background of its own', scheme, name)
+      else
+        local ratio = contrast(spec.fg or normal.fg, spec.bg)
+        if ratio < min then
+          failures[#failures + 1] = string.format(
+            '%s: %s #%06X on its own #%06X is %.2f:1, below %.1f:1',
+            scheme,
+            name,
+            spec.fg or normal.fg,
+            spec.bg,
+            ratio,
+            min
+          )
+        end
       end
     end
   end
