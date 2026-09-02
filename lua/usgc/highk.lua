@@ -17,12 +17,6 @@ local opts = {
   popup_bg = p.white,
   popup_sel_bg = p.fl_red,
   popup_sel_fg = p.white,
-  -- LSP references
-  reference_bg = p.fl_green,
-  -- Folds
-  fold_bg = p.fl_green,
-  -- Treesitter context
-  context_bg = p.fl_green,
   -- Gutter
   gutter_fg = p.fl_red,
   gutter_highlight = p.black,

@@ -19,10 +19,6 @@ local opts = {
   popup_bg = p.magenta,
   popup_sel_bg = p.fl_blue,
   popup_sel_fg = p.white,
-  -- LSP references / folds / context
-  reference_bg = p.fl_yellow,
-  fold_bg = p.fl_yellow,
-  context_bg = p.fl_yellow,
   -- Gutter
   gutter_fg = p.fl_blue,
   gutter_highlight = p.black,
