@@ -33,3 +33,9 @@ jobs:
             echo "Loading $name"
             nvim --headless -u NONE --cmd "set rtp+=." -c "colorscheme $name" -c "qa"
           done
+      - name: Generate the Ghostty themes
+        run: |
+          set -e
+          nvim -l contrib/ghostty.lua "$RUNNER_TEMP/themes"
+          # One theme per colorscheme, so a silently empty run fails here.
+          test "$(ls -1 "$RUNNER_TEMP/themes" | wc -l)" -eq "$(ls -1 colors/*.vim | wc -l)"
