@@ -329,7 +329,11 @@ function M.make_groups(opts)
     Substitute = { fg = opts.selection_fg, bg = opts.selection_bg },
     TabLine = { fg = cursorline_fg, bg = opts.cursorline_bg },
     TabLineFill = { bg = opts.bg },
-    TabLineSel = { fg = opts.bg, bg = opts.fg },
+    -- Not reversed: Neovim draws the window count inside the selected tab in
+    -- Title, whose foreground is the theme's own, so a background of that same
+    -- color made the count invisible in all five variants. The selected tab
+    -- reads as the buffer does, and the unselected ones carry the band.
+    TabLineSel = { fg = opts.fg, bg = opts.bg, bold = true },
     Tag = { link = 'Special' },
     TermCursor = { fg = opts.bg, bg = opts.caret },
     TermCursorNC = { fg = opts.bg, bg = p.gray },
