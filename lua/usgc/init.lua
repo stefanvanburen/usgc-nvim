@@ -93,8 +93,10 @@ function M.make_groups(opts)
     return mix(color, opts.bg, alpha)
   end
 
-  -- Diff foregrounds run the other way: the fluorescent primaries read on a
-  -- dark background, their 40% mixes into black on a light one.
+  -- Foregrounds run the other way. A palette color bright enough for a black
+  -- background is often too pale for a white one -- #00FFFF reaches 1.25:1
+  -- there -- so on a light theme each one is taken 40% into black, the same
+  -- mix that produced the palette's own dark tones.
   local light = is_light(opts.bg)
   local function ink(color)
     return light and mix(color, p.black, 0.4) or color
@@ -209,7 +211,10 @@ function M.make_groups(opts)
     DiagnosticFloatingOk = { link = 'DiagnosticOk' },
     DiagnosticFloatingWarn = { link = 'DiagnosticWarn' },
     DiagnosticHint = { fg = p.gray },
-    DiagnosticInfo = { fg = p.fl_blue },
+    -- Not fl_blue: #0000FF sits at 2.44:1 against the four black backgrounds,
+    -- and the palette holds no lighter blue. ink() turns this into the
+    -- palette's own #006666 CYAN on a light background.
+    DiagnosticInfo = { fg = ink(p.fl_cyan) },
     DiagnosticOk = { fg = p.green },
     DiagnosticSignError = { link = 'DiagnosticError' },
     DiagnosticSignHint = { link = 'DiagnosticHint' },
@@ -346,42 +351,15 @@ function M.make_groups(opts)
     MiniDepsTitleError = { link = 'DiffDelete' },
     MiniDepsTitleSame = { link = 'DiffText' },
     MiniDepsTitleUpdate = { link = 'DiffAdd' },
-    MiniDiffOverAdd = { link = 'DiffAdd' },
-    MiniDiffOverChange = { link = 'DiffText' },
-    MiniDiffOverContext = { link = 'DiffChange' },
-    MiniDiffOverDelete = { link = 'DiffDelete' },
-    MiniDiffSignAdd = { link = 'Added' },
-    MiniDiffSignChange = { link = 'Changed' },
-    MiniDiffSignDelete = { link = 'Removed' },
-    MiniFilesBorder = { link = 'FloatBorder' },
-    MiniFilesBorderModified = { link = 'DiagnosticFloatingWarn' },
-    MiniFilesCursorLine = { link = 'CursorLine' },
-    MiniFilesDirectory = { link = 'Directory' },
-    MiniFilesFile = {},
-    MiniFilesNormal = { link = 'NormalFloat' },
-    MiniFilesTitle = { link = 'FloatTitle' },
-    MiniFilesTitleFocused = { link = 'FloatTitle' },
     MiniTrailspace = { bg = p.fl_red },
 
     -- mini.pick
-    MiniPickBorder = { link = 'FloatBorder' },
-    MiniPickBorderBusy = { link = 'DiagnosticWarn' },
-    MiniPickBorderText = { link = 'FloatTitle' },
-    MiniPickHeader = { link = 'Comment' },
-    MiniPickIconDirectory = { link = 'Directory' },
-    MiniPickIconFile = { link = 'Normal' },
     MiniPickMatchCurrent = { link = 'PmenuSel' },
-    MiniPickMatchMarked = { link = 'Visual' },
-    MiniPickMatchRanges = { fg = opts.accent, bold = true },
-    MiniPickNormal = { link = 'NormalFloat' },
-    MiniPickPreviewLine = { link = 'CursorLine' },
+    -- Drawn over MiniPickMatchCurrent, so it carries its own background: as
+    -- an accent foreground it vanished into that row in usgc-highk.
+    MiniPickMatchRanges = { link = 'IncSearch' },
     MiniPickPreviewRegion = { link = 'Visual' },
     MiniPickPrompt = { link = 'Special' },
-
-    -- mini.notify
-    MiniNotifyBorder = { link = 'FloatBorder' },
-    MiniNotifyNormal = { link = 'NormalFloat' },
-    MiniNotifyTitle = { link = 'FloatTitle' },
 
     -- mini.statusline
     MiniStatuslineDevinfo = { fg = opts.fg, bg = opts.cursorline_bg },
@@ -396,11 +374,13 @@ function M.make_groups(opts)
     MiniStatuslineModeVisual = { fg = p.black, bg = p.fl_green, bold = true },
 
     -- mini.starter
-    MiniStarterCurrent = { link = 'PmenuSel' },
+    -- No MiniStarterCurrent: mini.starter draws the item prefix and the query
+    -- over the current item, both in the accent color, and its own default
+    -- leaves the current item unfilled for exactly that reason. Filling it
+    -- with PmenuSel hid the prefix behind an accent-colored block in four of
+    -- the five variants -- and completely in usgc-highk, where the accent and
+    -- the selection are both #FF0000. The cursor marks the item instead.
     MiniStarterFooter = { link = 'Comment' },
-    MiniStarterHeader = { link = 'Title' },
-    MiniStarterInactive = { link = 'Comment' },
-    MiniStarterItem = { link = 'Normal' },
     MiniStarterItemBullet = { link = 'Special' },
     MiniStarterItemPrefix = { link = 'Special' },
     MiniStarterSection = { link = 'Title' },
@@ -416,24 +396,24 @@ function M.make_groups(opts)
     -- mini.hipatterns
     MiniHipatternsFixme = { fg = opts.bg, bg = p.fl_red, bold = true },
     MiniHipatternsHack = { fg = p.black, bg = p.fl_orange, bold = true },
-    MiniHipatternsTodo = { fg = p.black, bg = p.fl_blue, bold = true },
+    MiniHipatternsTodo = { fg = p.white, bg = p.fl_blue, bold = true },
     MiniHipatternsNote = { fg = p.black, bg = p.green, bold = true },
 
     -- mini.icons
-    MiniIconsAzure = { fg = p.fl_cyan },
-    MiniIconsBlue = { fg = p.fl_blue },
-    MiniIconsCyan = { fg = p.cyan },
-    MiniIconsGreen = { fg = p.green },
-    MiniIconsGrey = { fg = p.gray },
-    MiniIconsOrange = { fg = p.fl_orange },
-    MiniIconsPurple = { fg = p.fl_magenta },
-    MiniIconsRed = { fg = p.fl_red },
-    MiniIconsYellow = { fg = p.yellow },
+    MiniIconsAzure = { fg = ink(p.fl_cyan) },
+    MiniIconsBlue = { fg = ink(p.fl_blue) },
+    MiniIconsCyan = { fg = ink(p.cyan) },
+    MiniIconsGreen = { fg = ink(p.green) },
+    MiniIconsGrey = { fg = ink(p.gray) },
+    MiniIconsOrange = { fg = ink(p.fl_orange) },
+    MiniIconsPurple = { fg = ink(p.fl_magenta) },
+    MiniIconsRed = { fg = ink(p.fl_red) },
+    MiniIconsYellow = { fg = ink(p.yellow) },
 
     -- mini.git
-    MiniGitSignAdd = { link = 'MiniDiffSignAdd' },
-    MiniGitSignChange = { link = 'MiniDiffSignChange' },
-    MiniGitSignDelete = { link = 'MiniDiffSignDelete' },
+    MiniGitSignAdd = { link = 'Added' },
+    MiniGitSignChange = { link = 'Changed' },
+    MiniGitSignDelete = { link = 'Removed' },
 
     -- treesitter-context
     TreesitterContext = { bg = opts.cursorline_bg },

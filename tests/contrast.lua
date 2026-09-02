@@ -1,4 +1,4 @@
--- Contrast check for the diff highlight groups, run headless:
+-- Contrast check for the diff and match highlight groups, run headless:
 --
 --     nvim -l tests/contrast.lua
 --
@@ -29,6 +29,12 @@ local checks = {
   { 'Changed', 'DiffText', 3 },
   { 'Removed', 'DiffDelete', 3 },
 }
+
+-- Groups a plugin paints on top of another group's background, here
+-- mini.pick's match ranges over the current match. A foreground alone is at
+-- the mercy of whatever is underneath -- these were drawn in the accent color
+-- over an accent-colored row -- so each has to carry a background of its own.
+local layered = { 'MiniPickMatchRanges' }
 
 local function channel(color, shift)
   return math.floor(color / shift) % 0x100
@@ -74,6 +80,26 @@ for _, path in ipairs(vim.fn.glob(root .. '/colors/usgc-*.vim', false, true)) do
   local scheme = vim.fn.fnamemodify(path, ':t:r')
   vim.cmd.colorscheme(scheme)
   local normal = hl('Normal')
+
+  for _, name in ipairs(layered) do
+    local spec = hl(name)
+    pairings = pairings + 1
+    if not spec.bg then
+      failures[#failures + 1] = string.format('%s: %s has no background of its own', scheme, name)
+    else
+      local ratio = contrast(spec.fg or normal.fg, spec.bg)
+      if ratio < 3 then
+        failures[#failures + 1] = string.format(
+          '%s: %s #%06X on its own #%06X is %.2f:1, below 3.0:1',
+          scheme,
+          name,
+          spec.fg or normal.fg,
+          spec.bg,
+          ratio
+        )
+      end
+    end
+  end
 
   for _, check in ipairs(checks) do
     local fg_group, bg_group, min = check[1], check[2], check[3]
