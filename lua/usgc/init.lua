@@ -42,6 +42,31 @@ function M.apply(name, groups, terminal)
   end
 end
 
+-- Split a "#RRGGBB" string into its channels.
+local function channels(hex)
+  local n = tonumber(hex:sub(2), 16)
+  return math.floor(n / 0x10000), math.floor(n / 0x100) % 0x100, n % 0x100
+end
+
+-- Mix `color` into `onto`; `alpha` is the share taken from `color`.
+local function mix(color, onto, alpha)
+  local cr, cg, cb = channels(color)
+  local orr, og, ob = channels(onto)
+  return string.format(
+    '#%02X%02X%02X',
+    math.floor(cr * alpha + orr * (1 - alpha) + 0.5),
+    math.floor(cg * alpha + og * (1 - alpha) + 0.5),
+    math.floor(cb * alpha + ob * (1 - alpha) + 0.5)
+  )
+end
+
+-- Every variant's background is either black or white, so this only has to
+-- pick a side.
+local function is_light(hex)
+  local r, g, b = channels(hex)
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 128
+end
+
 -- Generate highlight groups for a theme variant
 -- @param opts table with:
 --   bg, fg, accent, caret
@@ -51,6 +76,29 @@ end
 --   gutter_fg, gutter_highlight
 function M.make_groups(opts)
   local p = M.palette
+
+  -- Diff backgrounds are mixed against the theme's own background instead of
+  -- taken from the palette, because a plugin may pair them with a foreground
+  -- the theme never chose for them: diffs.nvim derives its own backgrounds
+  -- from DiffAdd's and DiffDelete's and leaves the buffer's text on top, which
+  -- put Added's #00A645 over a background made from that same #00A645, at
+  -- 1.0:1.
+  --
+  -- The three line-level mixes are tuned to one luminance, that of the
+  -- palette's maroon -- itself fl_red mixed 40% into black -- so a foreground
+  -- reads the same over all of them, and holds 4.2:1 against the dimmest
+  -- foreground of any variant. DiffText is brighter on purpose, to separate
+  -- the changed text inside a changed line, and holds 3:1 there.
+  local function tint(color, alpha)
+    return mix(color, opts.bg, alpha)
+  end
+
+  -- Diff foregrounds run the other way: the fluorescent primaries read on a
+  -- dark background, their 40% mixes into black on a light one.
+  local light = is_light(opts.bg)
+  local function ink(color)
+    return light and mix(color, p.black, 0.4) or color
+  end
 
   return {
     -- Treesitter
@@ -180,13 +228,13 @@ function M.make_groups(opts)
     DiagnosticVirtualTextOk = { link = 'DiagnosticOk' },
     DiagnosticVirtualTextWarn = { link = 'DiagnosticWarn' },
     DiagnosticWarn = { fg = p.fl_orange },
-    Added = { fg = p.green },
-    Changed = { fg = p.fl_blue },
-    Removed = { fg = p.fl_red },
-    DiffAdd = { fg = p.black, bg = p.green },
-    DiffChange = { fg = opts.fg, bg = opts.cursorline_bg },
-    DiffDelete = { fg = p.white, bg = p.maroon },
-    DiffText = { fg = p.black, bg = opts.accent, bold = true },
+    Added = { fg = ink(p.fl_green) },
+    Changed = { fg = ink(p.fl_yellow) },
+    Removed = { fg = ink(p.fl_red) },
+    DiffAdd = { fg = opts.fg, bg = tint(p.fl_green, 0.22) },
+    DiffChange = { fg = opts.fg, bg = tint(p.fl_yellow, 0.19) },
+    DiffDelete = { fg = opts.fg, bg = tint(p.fl_red, 0.4) },
+    DiffText = { fg = opts.fg, bg = tint(p.fl_yellow, 0.27), bold = true },
     Directory = { fg = opts.accent },
     EndOfBuffer = { link = 'NonText' },
     Error = { fg = opts.bg, bg = p.fl_red, bold = true },
@@ -281,8 +329,9 @@ function M.make_groups(opts)
     Whitespace = { link = 'NonText' },
     WildMenu = { fg = opts.popup_sel_fg, bg = opts.popup_sel_bg, bold = true },
     WinSeparator = { fg = p.gray },
-    diffAdded = { link = 'DiffAdd' },
-    diffRemoved = { link = 'DiffDelete' },
+    diffAdded = { link = 'Added' },
+    diffChanged = { link = 'Changed' },
+    diffRemoved = { link = 'Removed' },
     gitcommitOverflow = { link = 'WarningMsg' },
 
     -- mini.nvim
@@ -301,9 +350,9 @@ function M.make_groups(opts)
     MiniDiffOverChange = { link = 'DiffText' },
     MiniDiffOverContext = { link = 'DiffChange' },
     MiniDiffOverDelete = { link = 'DiffDelete' },
-    MiniDiffSignAdd = { fg = p.fl_green },
-    MiniDiffSignChange = { fg = p.fl_blue },
-    MiniDiffSignDelete = { fg = p.fl_red },
+    MiniDiffSignAdd = { link = 'Added' },
+    MiniDiffSignChange = { link = 'Changed' },
+    MiniDiffSignDelete = { link = 'Removed' },
     MiniFilesBorder = { link = 'FloatBorder' },
     MiniFilesBorderModified = { link = 'DiagnosticFloatingWarn' },
     MiniFilesCursorLine = { link = 'CursorLine' },

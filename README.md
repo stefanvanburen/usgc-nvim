@@ -63,6 +63,12 @@ The themes use the USGC standard color palette:
 | `#666600` | OLIVE       |
 | `#999999` | GRAY        |
 
+Diff backgrounds are not palette colors. `DiffAdd`, `DiffChange`, `DiffDelete`
+and `DiffText` mix a fluorescent primary into the theme's own background,
+because plugins pair those backgrounds with foregrounds the theme never chose
+for them. Each mix lands at the luminance of `#660000` MAROON, which is itself
+FL RED mixed 40% into black.
+
 ## Terminal themes
 
 `contrib/` generates matching themes for the terminal by reading the colors back
