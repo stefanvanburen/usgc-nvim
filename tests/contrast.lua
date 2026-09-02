@@ -36,10 +36,9 @@ local checks = {
 -- over an accent-colored row -- so each has to carry a background of its own.
 local layered = { 'MiniPickMatchRanges' }
 
--- Backgrounds that carry text without marking the cursor. cursorline_bg is a
--- fluorescent primary in every variant, so these mix it down until the theme's
--- own foreground reads over them.
-local panels = { 'Folded', 'StatusLineNC', 'TabLine', 'QuickFixLine', 'TreesitterContext', 'LspReferenceText' }
+-- Groups that put the theme's own text on cursorline_bg, a fluorescent
+-- primary. The band stays; the foreground is what has to read on it.
+local panels = { 'Folded', 'StatusLineNC', 'TabLine', 'MiniStatuslineDevinfo' }
 
 local function channel(color, shift)
   return math.floor(color / shift) % 0x100

@@ -71,7 +71,7 @@ end
 -- @param opts table with:
 --   bg, fg, accent, caret
 --   selection_bg, selection_fg (for Visual, Search)
---   cursorline_bg (for CursorLine, and mixed down for panels behind text)
+--   cursorline_bg (for CursorLine - subtle)
 --   popup_bg, popup_sel_bg, popup_sel_fg (for Pmenu, floats)
 --   gutter_fg, gutter_highlight
 function M.make_groups(opts)
@@ -93,14 +93,15 @@ function M.make_groups(opts)
     return mix(color, opts.bg, alpha)
   end
 
-  -- Backgrounds that sit behind text without marking the cursor: folds, the
-  -- inactive statusline and tabline, treesitter context, LSP references, the
-  -- current quickfix line. cursorline_bg is a fluorescent primary in every
-  -- variant, which reads as a marker the eye follows across one line but not
-  -- as a panel with text on it -- usgc-reticle's foreground came out at
-  -- 2.68:1 there, usgc-highk's folds at 2.08:1. A fifth of the way into the
-  -- background keeps each variant's color and clears 4.1:1 in all five.
-  local panel_bg = mix(opts.cursorline_bg, opts.bg, 0.2)
+  -- Text that sits on cursorline_bg. It is a fluorescent primary in every
+  -- variant, so the theme's own foreground is not guaranteed to read on it:
+  -- usgc-reticle's #00A645 came out at 2.68:1 there and usgc-highk's gray
+  -- folds at 2.08:1. Black or white against the band clears 8.59:1 at worst,
+  -- and leaves the band itself alone -- it is the color the scheme is known
+  -- for. Groups that carry arbitrary syntax on it rather than the theme's own
+  -- foreground -- CursorLine, TreesitterContext, LspReferenceText,
+  -- QuickFixLine -- cannot be fixed this way and keep what they had.
+  local cursorline_fg = is_light(opts.cursorline_bg) and p.black or p.white
 
   -- Foregrounds run the other way. A palette color bright enough for a black
   -- background is often too pale for a white one -- #00FFFF reaches 1.25:1
@@ -259,7 +260,7 @@ function M.make_groups(opts)
     FloatFooter = { link = 'FloatTitle' },
     FloatTitle = { link = 'Title' },
     FoldColumn = { fg = p.gray },
-    Folded = { fg = opts.fg, bg = panel_bg },
+    Folded = { fg = cursorline_fg, bg = opts.cursorline_bg },
     Function = { fg = opts.fg },
     Identifier = { fg = opts.fg },
     Ignore = { link = 'Normal' },
@@ -276,7 +277,7 @@ function M.make_groups(opts)
     LspInlayHint = { link = 'NonText' },
     LspReferenceRead = { link = 'LspReferenceText' },
     LspReferenceTarget = { link = 'LspReferenceText' },
-    LspReferenceText = { bg = panel_bg },
+    LspReferenceText = { bg = opts.cursorline_bg },
     LspReferenceWrite = { link = 'LspReferenceText' },
     LspSignatureActiveParameter = { link = 'Visual' },
     Macro = { link = 'PreProc' },
@@ -304,7 +305,7 @@ function M.make_groups(opts)
     PreCondit = { link = 'PreProc' },
     PreProc = { fg = opts.fg },
     Question = { fg = opts.fg },
-    QuickFixLine = { bg = panel_bg },
+    QuickFixLine = { bg = opts.cursorline_bg },
     Repeat = { link = 'Statement' },
     Search = { fg = opts.selection_fg, bg = opts.selection_bg, bold = true },
     SignColumn = { fg = opts.fg, bg = opts.bg },
@@ -319,14 +320,14 @@ function M.make_groups(opts)
     SpellRare = { sp = p.fl_magenta, undercurl = true },
     Statement = { fg = opts.fg, bold = true },
     StatusLine = { fg = opts.bg, bg = opts.fg },
-    StatusLineNC = { fg = opts.fg, bg = panel_bg },
+    StatusLineNC = { fg = cursorline_fg, bg = opts.cursorline_bg },
     StatusLineTerm = { link = 'StatusLine' },
     StatusLineTermNC = { link = 'StatusLineNC' },
     StorageClass = { link = 'Type' },
     String = { fg = opts.fg },
     Structure = { link = 'Type' },
     Substitute = { fg = opts.selection_fg, bg = opts.selection_bg },
-    TabLine = { fg = opts.fg, bg = panel_bg },
+    TabLine = { fg = cursorline_fg, bg = opts.cursorline_bg },
     TabLineFill = { bg = opts.bg },
     TabLineSel = { fg = opts.bg, bg = opts.fg },
     Tag = { link = 'Special' },
@@ -371,7 +372,7 @@ function M.make_groups(opts)
     MiniPickPrompt = { link = 'Special' },
 
     -- mini.statusline
-    MiniStatuslineDevinfo = { fg = opts.fg, bg = panel_bg },
+    MiniStatuslineDevinfo = { fg = cursorline_fg, bg = opts.cursorline_bg },
     MiniStatuslineFileinfo = { link = 'MiniStatuslineDevinfo' },
     MiniStatuslineFilename = { link = 'StatusLineNC' },
     MiniStatuslineInactive = { link = 'StatusLineNC' },
@@ -425,8 +426,8 @@ function M.make_groups(opts)
     MiniGitSignDelete = { link = 'Removed' },
 
     -- treesitter-context
-    TreesitterContext = { bg = panel_bg },
-    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = panel_bg },
+    TreesitterContext = { bg = opts.cursorline_bg },
+    TreesitterContextLineNumber = { fg = opts.gutter_fg, bg = opts.cursorline_bg },
     TreesitterContextSeparator = { fg = p.gray },
 
     -- mason.nvim
