@@ -24,6 +24,27 @@ local opts = {
   -- Gutter
   gutter_fg = p.fl_red,
   gutter_highlight = p.white,
+  -- Upstream ships a terminal theme for this scheme alone,
+  -- themes/iterm/USGC-RETICLE-IT.itermcolors, stored in Display P3 and
+  -- converted to sRGB here. It is independent of the standard palette above.
+  terminal = {
+    [0] = '#262626',
+    [1] = '#E00000',
+    [2] = '#FFC200',
+    [3] = '#FFC200',
+    [4] = '#723DF9',
+    [5] = '#FF208F',
+    [6] = '#0079FF',
+    [7] = '#FFFFFF',
+    [8] = '#494747',
+    [9] = '#E00000',
+    [10] = '#F4BA00',
+    [11] = '#FFC200',
+    [12] = '#FF7321',
+    [13] = '#FF208F',
+    [14] = '#0078FF',
+    [15] = '#FEFEFF',
+  },
 }
 
 local M = {}

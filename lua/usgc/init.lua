@@ -411,14 +411,24 @@ function M.make_groups(opts)
 end
 
 -- Generate terminal colors for a theme
+-- Themes set opts.terminal when the default does not suit them; the default
+-- assumes a black background.
+-- @param opts table, optionally with terminal table<number, string>
 function M.make_terminal(opts)
+  if opts.terminal then
+    return opts.terminal
+  end
+
   local p = M.palette
+  -- Slots 4 and 12 are not fl_blue: #0000FF sits at 2.44:1 against black, and
+  -- the standard palette holds no blue that clears 3:1 there. The violet is
+  -- upstream's own terminal blue, from themes/iterm/USGC-RETICLE-IT.itermcolors.
   return {
     [0] = p.black,
     [1] = p.fl_red,
     [2] = p.green,
     [3] = p.yellow,
-    [4] = p.fl_blue,
+    [4] = '#723DF9',
     [5] = p.fl_magenta,
     [6] = p.fl_cyan,
     [7] = p.gray,
@@ -426,7 +436,7 @@ function M.make_terminal(opts)
     [9] = p.fl_red,
     [10] = p.fl_green,
     [11] = p.fl_yellow,
-    [12] = p.fl_blue,
+    [12] = p.fl_cyan,
     [13] = p.fl_magenta,
     [14] = p.fl_cyan,
     [15] = p.white,
