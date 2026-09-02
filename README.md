@@ -52,6 +52,19 @@ The themes use the USGC standard color palette:
 | `#666600` | OLIVE       |
 | `#999999` | GRAY        |
 
+## Ghostty
+
+`contrib/ghostty.lua` generates matching [Ghostty](https://ghostty.org) themes
+by reading the colors back out of Neovim, so the two cannot drift:
+
+```sh
+nvim -l contrib/ghostty.lua
+```
+
+It writes one file per colorscheme into `$XDG_CONFIG_HOME/ghostty/themes`, or
+into a directory given as its first argument. Select one in your Ghostty config
+by name, e.g. `theme = light:usgc-highk,dark:usgc-polyimide`.
+
 ## License
 
 MIT License - See [LICENSE](LICENSE)
