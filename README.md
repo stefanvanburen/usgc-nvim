@@ -52,18 +52,29 @@ The themes use the USGC standard color palette:
 | `#666600` | OLIVE       |
 | `#999999` | GRAY        |
 
-## Ghostty
+## Terminal themes
 
-`contrib/ghostty.lua` generates matching [Ghostty](https://ghostty.org) themes
-by reading the colors back out of Neovim, so the two cannot drift:
+`contrib/` generates matching themes for the terminal by reading the colors back
+out of Neovim, so the two cannot drift. Each script writes one file per
+colorscheme, into the directory given as its first argument or the default
+below.
+
+[Ghostty](https://ghostty.org), into `$XDG_CONFIG_HOME/ghostty/themes`:
 
 ```sh
 nvim -l contrib/ghostty.lua
 ```
 
-It writes one file per colorscheme into `$XDG_CONFIG_HOME/ghostty/themes`, or
-into a directory given as its first argument. Select one in your Ghostty config
-by name, e.g. `theme = light:usgc-highk,dark:usgc-polyimide`.
+Select one by name, e.g. `theme = light:usgc-highk,dark:usgc-polyimide`.
+
+[fish](https://fishshell.com), into `$XDG_CONFIG_HOME/fish/themes`:
+
+```sh
+nvim -l contrib/fish.lua
+```
+
+Then `fish_config theme choose usgc-reticle` for the current session, or
+`fish_config theme save usgc-reticle` to keep it.
 
 ## License
 
