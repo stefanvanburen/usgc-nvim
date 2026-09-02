@@ -8,7 +8,8 @@ CONTENTS                                                       *usgc-contents*
     3. Installation .................. |usgc-installation|
     4. Themes ......................... |usgc-themes|
     5. Following 'background' ......... |usgc-background|
-    6. Standard colors ................ |usgc-colors|
+    6. Terminal themes ................ |usgc-terminal|
+    7. Standard colors ................ |usgc-colors|
 
 ==============================================================================
 1. Introduction                                            *usgc-introduction*
@@ -79,7 +80,30 @@ is "dark". Either can be named explicitly, before the colorscheme loads: >lua
 <
 
 ==============================================================================
-6. Standard colors                                               *usgc-colors*
+6. Terminal themes                                             *usgc-terminal*
+
+The scripts in `contrib/` generate matching themes for the terminal, reading
+the colors back out of Neovim so the two cannot drift. Each writes one file
+per variant, into the directory given as its first argument or the default
+below.
+
+                                                              *usgc-ghostty*
+Ghostty (https://ghostty.org), into `$XDG_CONFIG_HOME/ghostty/themes`: >sh
+    nvim -l contrib/ghostty.lua
+<
+Select one by name, e.g. >
+    theme = light:usgc-highk,dark:usgc-polyimide
+<
+                                                                 *usgc-fish*
+fish (https://fishshell.com), into `$XDG_CONFIG_HOME/fish/themes`: >sh
+    nvim -l contrib/fish.lua
+<
+Then, in fish: >fish
+    fish_config theme choose usgc-reticle   # this session
+    fish_config theme save usgc-reticle     # keep it
+<
+==============================================================================
+7. Standard colors                                               *usgc-colors*
 
 The themes use the USGC standard color palette:
 
