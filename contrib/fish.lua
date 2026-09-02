@@ -95,7 +95,9 @@ local variables = {
   { 'fish_pager_color_selected_prefix', 'PmenuSel' },
 }
 
-for _, path in ipairs(vim.fn.glob(root .. '/colors/*.vim', false, true)) do
+-- Only the variants: the `usgc` colorscheme is a light/dark switch between
+-- them, and has no colors of its own to generate from.
+for _, path in ipairs(vim.fn.glob(root .. '/colors/usgc-*.vim', false, true)) do
   local name = vim.fn.fnamemodify(path, ':t:r')
   vim.cmd.colorscheme(name)
 

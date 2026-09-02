@@ -7,7 +7,8 @@ CONTENTS                                                       *usgc-contents*
     2. Requirements .................. |usgc-requirements|
     3. Installation .................. |usgc-installation|
     4. Themes ......................... |usgc-themes|
-    5. Standard colors ................ |usgc-colors|
+    5. Following 'background' ......... |usgc-background|
+    6. Standard colors ................ |usgc-colors|
 
 ==============================================================================
 1. Introduction                                            *usgc-introduction*
@@ -32,6 +33,8 @@ https://usgraphics.com/
     vim.pack.add({ 'https://github.com/stefanvanburen/usgc-nvim' })
     -- e.g.
     vim.cmd.colorscheme('usgc-highk')
+    -- or, to follow 'background', see |usgc-background|
+    vim.cmd.colorscheme('usgc')
 <
 
 ==============================================================================
@@ -60,7 +63,23 @@ https://usgraphics.com/
 `usgc-metalgate` (5200-050)  Cyan scheme. Metal gate transistor.
 
 ==============================================================================
-5. Standard colors                                               *usgc-colors*
+5. Following 'background'                                    *usgc-background*
+
+                                                                       *usgc*
+The `usgc` colorscheme picks a variant to match 'background', and switches
+when 'background' does: >vim
+    colorscheme usgc
+<
+                                                        *g:usgc_light* *g:usgc_dark*
+It uses `usgc-highk` when 'background' is "light" and `usgc-polyimide` when it
+is "dark". Either can be named explicitly, before the colorscheme loads: >lua
+    vim.g.usgc_light = 'usgc-highk'
+    vim.g.usgc_dark = 'usgc-reticle'
+    vim.cmd.colorscheme('usgc')
+<
+
+==============================================================================
+6. Standard colors                                               *usgc-colors*
 
 The themes use the USGC standard color palette:
 

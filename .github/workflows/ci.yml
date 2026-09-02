@@ -36,8 +36,8 @@ jobs:
       - name: Generate the terminal themes
         run: |
           set -e
-          # One theme per colorscheme, so a silently empty run fails here.
-          count=$(ls -1 colors/*.vim | wc -l)
+          # One theme per variant, so a silently empty run fails here.
+          count=$(ls -1 colors/usgc-*.vim | wc -l)
           nvim -l contrib/ghostty.lua "$RUNNER_TEMP/ghostty"
           test "$(ls -1 "$RUNNER_TEMP/ghostty" | wc -l)" -eq "$count"
           nvim -l contrib/fish.lua "$RUNNER_TEMP/fish"

@@ -410,6 +410,23 @@ function M.make_groups(opts)
   }
 end
 
+-- Apply the variant matching 'background', for the `usgc` colorscheme.
+-- Override either variant with g:usgc_light or g:usgc_dark.
+function M.variant()
+  local light = vim.g.usgc_light or 'usgc-highk'
+  local dark = vim.g.usgc_dark or 'usgc-polyimide'
+  local name = vim.o.background == 'light' and light or dark
+
+  -- Applied through the module rather than :colorscheme, because the variant's
+  -- own 'background' setting resets highlighting when it runs nested inside
+  -- this one.
+  require('usgc.' .. name:gsub('^usgc%-', '')).apply()
+
+  -- Take back the name the variant just set, so Neovim re-sources this
+  -- colorscheme -- and so picks the other variant -- when 'background' changes.
+  vim.g.colors_name = 'usgc'
+end
+
 -- Generate terminal colors for a theme
 -- Themes set opts.terminal when the default does not suit them; the default
 -- assumes a black background.

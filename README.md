@@ -20,6 +20,17 @@ vim.cmd.colorscheme('usgc-highk')
 
 ## Themes
 
+`usgc` follows `'background'`, and switches when it does:
+
+```lua
+vim.cmd.colorscheme('usgc')
+```
+
+It uses `usgc-highk` when `'background'` is `light` and `usgc-polyimide` when
+it is `dark`. Name either explicitly with `vim.g.usgc_light` and
+`vim.g.usgc_dark`, set before the colorscheme loads. The variants can also be
+selected directly:
+
 | Part Number | Theme Name       | Description    |
 |-------------|------------------|----------------|
 | 5200-010    | `usgc-highk`     | White scheme   |
