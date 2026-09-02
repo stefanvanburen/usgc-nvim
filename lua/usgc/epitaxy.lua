@@ -7,7 +7,9 @@ local opts = {
   bg = p.black,
   fg = p.fl_magenta,
   caret = p.white,
-  accent = p.fl_blue,
+  -- Upstream's fl_blue sits at 2.44:1 against this scheme's black background,
+  -- which reaches every group linked to Special.
+  accent = p.fl_cyan,
   -- Visual selection and search (original uses blue)
   selection_bg = p.blue,
   selection_fg = p.fl_yellow,
